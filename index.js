@@ -15,16 +15,20 @@ for (var i = 0; i < polis.length; i++) {
         var count = 1;
         for (var d of data) {
             var txt = d.txt
-            var fileName = project + '\\' + count + '.html';
-             var content = '<!DOCTYPE html>'
-                + '<html><head></head><body><div style="width: 100%;text-align: center"><h1>' + txt + '</h1></div></body></html>';
+            var dir = './' + project;
+            if (!fs.existsSync(dir)) {
+                fs.mkdirSync(dir);
+            }
+            var fileName = dir + '/' + count + '.html';
+            var content = '<!DOCTYPE html>'
+                + '<html><head></head><body><div style="width: 100%;text-align: center"><h1 style="font-size: 300px">' + txt + '</h1></div></body></html>';
             fs.writeFile(fileName, content, function (err) {
                 if (err) {
                     return console.log(err);
                 }
                 console.log("The file was saved!");
             });
-            count++; 
+            count++;
         }
     });
     curl.on('error', function (err, curlErrCode) {
